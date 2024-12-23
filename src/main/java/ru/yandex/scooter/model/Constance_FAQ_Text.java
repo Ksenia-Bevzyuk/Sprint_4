@@ -1,7 +1,7 @@
 package ru.yandex.scooter.model;
 
 //класс с текстовыми константами ответов на вопросы о важном
-public class Constance_Answer_Text {
+public class Constance_FAQ_Text {
     public static final String REQUIRED_TEXT_DAY_400_PAYMENT_COURIER_CASH_OR_CARD =
             "Сутки — 400 рублей. Оплата курьеру — наличными или картой.";
     public static final String REQUIRED_TEXT_ONE_ORDER_ONE_SCOOTER =
@@ -18,4 +18,13 @@ public class Constance_Answer_Text {
             "Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои.";
     public static final String REQUIRED_TEXT_YES =
             "Да, обязательно. Всем самокатов! И Москве, и Московской области.";
+
+    public static final String HOW_MUCH_AND_HOW_TO_PAY_Q_TEXT = "Сколько это стоит? И как оплатить?";
+    public static final String WANT_SOME_Q_TEXT = "Хочу сразу несколько самокатов! Так можно?";
+    public static final String CALCULATION_RENTAL_TIME_Q_TEXT = "Как рассчитывается время аренды?";
+    public static final String ORDER_FOR_TODAY_Q_TEXT = "Можно ли заказать самокат прямо на сегодня?";
+    public static final String RENEWAL_OR_RETURN_EARLIER_Q_TEXT = "Можно ли продлить заказ или вернуть самокат раньше?";
+    public static final String CHARGER_Q_TEXT = "Вы привозите зарядку вместе с самокатом?";
+    public static final String CANCELLATION_Q_TEXT = "Можно ли отменить заказ?";
+    public static final String DELIVERY_OUTSIDE_THE_MKAD_Q_TEXT = "Я жизу за МКАДом, привезёте?";
 }

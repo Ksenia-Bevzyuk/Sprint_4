@@ -1,4 +1,4 @@
-package ru.yandex.scooter.model.order;
+package ru.yandex.scooter.model;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -33,15 +33,10 @@ public class AboutRentForm {
     //локатор кнопки "Посмотреть статус" на попапе "Заказ оформлен"
     private static final By BUTTON_POPUP_SUCCESS_ORDER =
             By.xpath(".//button[text()='Посмотреть статус']");
-    //два набора данных для заполнения полей формы
-    public static final String DATE_SET_FIRST = "30.12.2024";
-    public static final String DATE_SET_SECOND = "25.02.2025";
-    public static final By DAYS_SET_FIRST = By.xpath(".//div[text()='сутки']");
-    public static final By DAYS_SET_SECOND = By.xpath(".//div[text()='двое суток']");
-    public static final String COMMENT_SET_FIRST = "Не звонить";
-    public static final String COMMENT_SET_SECOND = "";
+    //локатор выбора аренды наа сутки
+    private static final By DAY = By.xpath(".//div[text()='сутки']");
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     //передаем в конструктор класса driver
     public AboutRentForm(WebDriver driver) {
@@ -57,24 +52,28 @@ public class AboutRentForm {
 
     //метод поиска и заполнения поля "Когда привезти самокат", передаем в него дату строкой
     public void setDateField(String date) {
+
         driver.findElement(DATE_FIELD).sendKeys(date);
     }
 
     //метод поиска, клика, ожидания выпадающего списка и заполнения кликом по элементу поля "Срок аренды"
-    public void setDayRentField(By days) {
+    public void setOneDayRentField() {
+
         driver.findElement(DAY_RENT_FIELD).click();
         new WebDriverWait(driver, Duration.ofSeconds(3))
-                .until(ExpectedConditions.elementToBeClickable(days));
-        driver.findElement(days).click();
+                .until(ExpectedConditions.elementToBeClickable(DAY));
+        driver.findElement(DAY).click();
     }
 
     //метод поиска и выбора кликом чек-бокса с цветом самоката
     public void setColorField() {
+
         driver.findElement(COLOR_FIELD).click();
     }
 
     //метод поиска и заполнения поля "Комментарий", передаем в него комментарий строкой
     public void setCommentField(String comment) {
+
         driver.findElement(COMMENT_FIELD).sendKeys(comment);
     }
 
@@ -101,9 +100,9 @@ public class AboutRentForm {
     }
 
     //объединяем методы заполнения полей формы и прокликивания кнопок в шаг
-    public void setAboutRentForm(String date, By days, String comment) {
+    public void setAboutRentForm(String date, String comment) {
         setDateField(date);
-        setDayRentField(days);
+        setOneDayRentField();
         setColorField();
         setCommentField(comment);
         clickOrderButton();

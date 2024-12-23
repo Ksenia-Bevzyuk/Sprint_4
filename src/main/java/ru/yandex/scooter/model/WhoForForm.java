@@ -1,4 +1,4 @@
-package ru.yandex.scooter.model.order;
+package ru.yandex.scooter.model;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -6,11 +6,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Objects;
 
 //класс страницы с формой "Для кого самокат"
 public class WhoForForm {
     //локатор формы
     private static final By ORDER_FORM_WHO_FOR = By.className("Order_Content__bmtHS");
+    //кнопка в заголовке
+    private static final By HEADER_ORDER_BUTTON = By.className("Button_Button__ra12g");
     //локатор поля "Имя"
     private static final By NAME_FIELD = By.xpath(".//input[@placeholder = '* Имя']");
     //локатор поля "Фамилия"
@@ -26,16 +29,7 @@ public class WhoForForm {
             By.xpath(".//input[@placeholder = '* Телефон: на него позвонит курьер']");
     //локатор кнопки "Далее"
     private static final By NEXT_BUTTON = By.xpath(".//button[text() = 'Далее']");
-    //два набора данных для заполнения полей формы
-    public static final String NAME_SET_FIRST = "Ирина";
-    public static final String NAME_SET_SECOND = "Иван Иван";
-    public static final String SURNAME_SET_FIRST = "Ан";
-    public static final String SURNAME_SET_SECOND = "Александринтова";
-    public static final String ADDRESS_SET_FIRST = "Жуж 1";
-    public static final String ADDRESS_SET_SECOND = "площадь Абельмановская Застава, д. 1, к. 2, кв. 3";
-    public static final String PHONE_SET_FIRST = "89012345678";
-    public static final String PHONE_SET_SECOND = "+71234567893";
-
+    //локатор выбора станции метро
     private static final By STATION_BULVAR_ROKOSOVSKOGO = By.xpath(".//li[1]");
 
     //локатор логотипа Самокат
@@ -45,23 +39,14 @@ public class WhoForForm {
     //локатор логотипа Яндекс
     private static final By YA_LOGO = By.xpath(".//img[@src='/assets/ya.svg']");
     //локатор на странице Яндекс
-    public static final By YA_RU = By.className("Header_Header__214zg");
+    private static final By YA_RU = By.className("Header_Header__214zg");
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     //передаем в конструктор класса driver
     public WhoForForm(WebDriver driver) {
+
         this.driver = driver;
-    }
-
-    //геттер для логотипа Яндекс
-    public static By getYaLogo() {
-        return YA_LOGO;
-    }
-
-    //геттер для логотипа Самокат
-    public static By getScooterLogo() {
-        return SCOOTER_LOGO;
     }
 
     //метод для ожидания загрузки формы
@@ -72,16 +57,19 @@ public class WhoForForm {
 
     //метод поиска и заполнения поля "Имя", передаем в него имя строкой
     public void setNameField(String name) {
+
         driver.findElement(NAME_FIELD).sendKeys(name);
     }
 
     //метод поиска и заполнения поля "Фамилия", передаем в него фамилию строкой
     public void setSurnameField(String surname) {
+
         driver.findElement(SURNAME_FIELD).sendKeys(surname);
     }
 
     //метод поиска и заполнения поля "Куда привезти самокат", передаем в него адрес строкой
     public void setAddressField(String address) {
+
         driver.findElement(ADDRESS_FIELD).sendKeys(address);
     }
 
@@ -94,11 +82,13 @@ public class WhoForForm {
 
     //метод поиска и заполнения поля "Телефон", передаем в него телефон строкой
     public void setPhoneField(String phone) {
+
         driver.findElement(PHONE_FIELD).sendKeys(phone);
     }
 
     //метод поиска и клика на кнопку "Далее"
     public void clickNextButton() {
+
         driver.findElement(NEXT_BUTTON).click();
     }
 
@@ -113,7 +103,26 @@ public class WhoForForm {
     }
 
     //метод кликает на логотип
-    public void clickToLogo(By logo) {
-        driver.findElement(logo).click();
+    public void clickToLogo(String logo) {
+        if (Objects.equals(logo, "Яндекс")) {
+            driver.findElement(YA_LOGO).click();
+        } else if (Objects.equals(logo, "Самокат")) {
+            driver.findElement(HEADER_ORDER_BUTTON).click();
+            driver.findElement(SCOOTER_LOGO).click();
+        } else {
+            driver.findElement(SCOOTER_LOGO).click();
+            System.out.println("Выбрано лого по умолчанию");
+        }
+    }
+
+    public boolean transitionFinalPageIsDisplayed(String finalPage) {
+        if (Objects.equals(finalPage, "yaSearch")) {
+            return driver.findElement(YA_RU).isDisplayed();
+        } else if (Objects.equals(finalPage, "scooterLanding")) {
+            return driver.findElement(SCOOTER_YA).isDisplayed();
+        } else {
+            System.out.println("По умолчанию");
+            return driver.findElement(SCOOTER_YA).isDisplayed();
+        }
     }
 }

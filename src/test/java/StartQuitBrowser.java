@@ -1,3 +1,5 @@
+import org.junit.After;
+import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -6,7 +8,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class StartQuitBrowser {
     protected WebDriver driver;
 
-    protected void start() {
+    @Before
+    public void start() {
 //        ChromeOptions fullScreen = new ChromeOptions();
 //        fullScreen.addArguments("--start-maximized");
 //
@@ -16,7 +19,8 @@ public class StartQuitBrowser {
         driver.manage().window().maximize();
     }
 
-    protected void quit() {
+    @After
+    public void quit() {
         driver.quit();
     }
 }
